@@ -1,0 +1,61 @@
+<!-- <div>
+    <h2>File Uploader</h2>
+</div>
+<div class="right">
+    <% if (locals.user) { %>
+        <a href="/logout">Logout</a>
+    <% } else { %>
+    <a href="/login">Login</a>
+    <a href="sign-up">Sign Up</a>
+    <% } %>
+</div>
+
+<style>
+
+    header {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    header .right {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+    }
+
+    a {
+
+    }
+
+</style> -->
+
+<header class="bg-indigo-700 shadow-lg sticky top-0 z-10">
+    <nav class="flex justify-between items-center p-4 max-w-7xl mx-auto">
+        <!-- Logo / App Name -->
+        <!-- The <h2> is replaced by a link <a> for proper navigation -->
+        <a href="/" class="text-2xl font-bold text-white hover:text-indigo-200 transition duration-200">
+            File Uploader
+        </a>
+
+        <!-- Right Side: Auth Links (Previously <div class="right">) -->
+        <div class="flex items-center space-x-4">
+            <% if (locals.user) { %>
+                <!-- Display username and link to log out -->
+                <span class="text-white text-sm font-medium hidden sm:inline">Welcome, <%= locals.user.username %></span>
+                <a href="/logout" 
+                   class="px-3 py-2 bg-red-500 rounded-lg text-sm font-semibold text-white hover:bg-red-600 transition duration-200 shadow-md">
+                    Logout
+                </a>
+            <% } else { %>
+                <!-- Display login and signup links -->
+                <a href="/login" class="text-white hover:text-indigo-200 font-medium px-2 py-2 transition duration-200">
+                    Log In
+                </a>
+                <a href="/sign-up" 
+                   class="px-3 py-2 bg-green-500 rounded-lg text-sm font-semibold text-white hover:bg-green-600 transition duration-200 shadow-md">
+                    Sign Up
+                </a>
+            <% } %>
+        </div>
+    </nav>
+</header>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home Page</title>
+
+<!-- FIX: Load Tailwind CSS here so the header partial styles work -->
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+/* Add the Inter font for consistency */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+body {
+font-family: 'Inter', sans-serif;
+background-color: #f0f4f8;
+}
+</style>
+
+</head>
+<body>
+
+<!-- Structural Fix: Include the partial directly, as the partial already contains the <header> tag -->
+<%- include("partials/header.ejs") %>
+
+<main class="container mx-auto p-8">
+    <% if (locals.user) {%>
+        <h3 class="text-2xl font-semibold text-indigo-700">You are logged in, <span class="font-bold"><%- user.username %></span>!</h3>
+        <p class="text-gray-600 mt-4">You can now access your files and folders.</p>
+      <% } else { %>
+        <h3 class="text-2xl font-semibold text-gray-700">Welcome to the File Uploader</h3>
+        <p class="text-gray-600 mt-4">Please log in or sign up to get started.</p>
+    <% } %>
+</main>
+
+
+</body>
+</html>
