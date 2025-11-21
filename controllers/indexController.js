@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs')
 
 
 async function getIndex(req,res) {
-    res.render("index", {user: req.user})
+    res.render("login")
 }
 
 async function getSignUp(req,res) {

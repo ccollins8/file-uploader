@@ -1,4 +1,5 @@
 const indexRouter = require("./routes/indexRouter");
+const fileRouter = require("./routes/fileRouter");
 
 const path = require("node:path");
 const express = require("express");
@@ -38,6 +39,7 @@ app.use(express.urlencoded({ extended: false }));
 require('./config/passport'); 
 
 app.use("/", indexRouter);
+app.use("/", fileRouter);
 
 app.listen(3000, () => console.log("app listening on port 3000!"));
 
