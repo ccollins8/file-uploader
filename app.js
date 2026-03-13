@@ -32,11 +32,15 @@ app.use(
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
-// app.use(session({ secret: "cats", resave: false, saveUninitialized: false }));
-app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
 
+// 3. Import the Config (Must be BEFORE passport.initialize)
 require('./config/passport'); 
+
+// 4. Passport Middleware
+app.use(passport.initialize()); // <--- ADD THIS
+app.use(passport.session());
+
 
 app.use("/", indexRouter);
 app.use("/", fileRouter);

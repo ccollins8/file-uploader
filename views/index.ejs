@@ -24,7 +24,7 @@ background-color: #f0f4f8;
 
 <!-- Structural Fix: Include the partial directly, as the partial already contains the <header> tag -->
 <%- include("partials/header.ejs") %>
-
+<% console.log(locals.user) %>
 <main class="container mx-auto p-8">
     <% if (locals.user) {%>
         <h3 class="text-2xl font-semibold text-indigo-700">You are logged in, <span class="font-bold"><%- user.username %></span>!</h3>
