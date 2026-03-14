@@ -4,11 +4,21 @@ const bcrypt = require('bcryptjs')
 
 
 async function getIndex(req,res) {
-    res.render("index",
-        {
-            user: req.user
-        }
-    )
+    // const folders = await prisma.folder.findMany()
+    // console.log(folders)
+    
+    // res.render("index",
+    //     {
+    //         user: req.user,
+    //         folders: folders
+    //     }
+    // )
+
+    if (req.isAuthenticated()) {
+        res.redirect("/folders")
+    } else {
+        res.redirect("/login")
+    }
 }
 
 async function getSignUp(req,res) {

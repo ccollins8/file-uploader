@@ -10,11 +10,15 @@ async function postUploadFile(req,res) {
     console.log(req.file)
 }
 
-async function getFiles(req,res) {
-    console.log('you clicked upload here is body!')
-    console.log(req.body)
-    console.log('and here is file')
-    console.log(req.file)
+async function getFolders(req,res) {
+    res.render('folders', {
+        user: req.user,
+        folders: await prisma.folder.findMany({
+            where: {
+                userId: req.user.id
+            }
+        })
+    })
 }
 
 async function postCreateFolder(req,res) {
@@ -39,5 +43,6 @@ async function getRoot(req,res) {
 
 module.exports = {
     postUploadFile,
-    postCreateFolder
+    postCreateFolder,
+    getFolders
 }

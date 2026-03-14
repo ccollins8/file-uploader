@@ -3,6 +3,9 @@ const fileController = require('../controllers/fileController')
 const fileRouter = Router();
 const uploadMiddleware = require('../config/upload');
 
+fileRouter.get('/folders', fileController.getFolders)
+
+
 fileRouter.post('/create-folder', fileController.postCreateFolder)
 
 

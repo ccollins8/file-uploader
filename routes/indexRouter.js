@@ -8,6 +8,7 @@ indexRouter.get('/sign-up', indexController.getSignUp);
 indexRouter.get('/login', indexController.getLogin);
 indexRouter.get('/logout', indexController.getLogout);
 
+
 indexRouter.post('/sign-up', indexController.postSignUp);
 
 indexRouter.post(
