@@ -38,7 +38,9 @@ background-color: #f0f4f8;
     
     <%- include("partials/upload-file-form.ejs") %>
     <%- include("partials/create-folder-form.ejs") %>
-    <p></p>
+    <% folders.forEach(folder => { %>
+        <p><%- folder.name %></p>
+    <% }); %>
     <% } %>
 </main>
 

@@ -10,27 +10,35 @@ async function postUploadFile(req,res) {
     console.log(req.file)
 }
 
-async function getFolders(req,res) {
+async function getFolder(req, res) {
+    const folderId = req.params.id ? parseInt(req.params.id) : null;
+
     res.render('folders', {
-        user: req.user,
-        folders: await prisma.folder.findMany({
+        user: req.user, //
+        folders: await prisma.folder.findMany({ // Changed 'folder' to 'folders'
             where: {
-                userId: req.user.id
+                userId: req.user.id,
+                parentId: folderId, //
             }
-        })
-    })
+        }),
+        currentFolderId: folderId,
+    });
 }
 
-async function postCreateFolder(req,res) {
-    const folder = req.body
-    console.log(req.user.id)
+async function postCreateFolder(req, res) {
+    const { name, parentId } = req.body;
     
     await prisma.folder.create({
         data: {
-            name: folder.name,
-            userId: req.user.id
+            name: name,
+            userId: req.user.id,
+            parentId: parentId ? parseInt(parentId) : null, //
         }
-    })
+    });
+
+    // CRITICAL: Tell the browser to go back to the folder view
+    const redirectUrl = parentId ? `/folders/${parentId}` : '/folders';
+    res.redirect(redirectUrl);
 }
 
 async function getRoot(req,res) {
@@ -44,5 +52,5 @@ async function getRoot(req,res) {
 module.exports = {
     postUploadFile,
     postCreateFolder,
-    getFolders
+    getFolder
 }

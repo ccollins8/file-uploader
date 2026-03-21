@@ -3,7 +3,10 @@ const fileController = require('../controllers/fileController')
 const fileRouter = Router();
 const uploadMiddleware = require('../config/upload');
 
-fileRouter.get('/folders', fileController.getFolders)
+// Add the '?' so /folders works without an ID
+// Change getFolders to getFolder to match your controller
+fileRouter.get('/folders', fileController.getFolder);
+fileRouter.get('/folders/:id', fileController.getFolder);
 
 
 fileRouter.post('/create-folder', fileController.postCreateFolder)
