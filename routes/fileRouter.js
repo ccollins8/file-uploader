@@ -12,7 +12,7 @@ fileRouter.get('/folders/:id', fileController.getFolder);
 fileRouter.post('/create-folder', fileController.postCreateFolder)
 
 
-fileRouter.post('/upload', 
+fileRouter.post('/upload-file', 
     uploadMiddleware.single('uploaded_file'), // <-- This is Multer, it saves the file!
     fileController.postUploadFile             // <-- This is the new controller, it saves the path to Prisma!
 );

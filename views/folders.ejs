@@ -41,6 +41,9 @@ background-color: #f0f4f8;
     <% folders.forEach(folder => { %>
         <p><%- folder.name %></p>
     <% }); %>
+    <% files.forEach(file => { %>
+        <p><%- file.originalName %></p>
+    <% }); %>
     <% } %>
 </main>
 
