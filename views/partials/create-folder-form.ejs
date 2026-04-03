@@ -1,8 +1,8 @@
 <form action="/create-folder" method="POST">
     <label for="name">Name</label>
     <input type="text" name="name">
-
-    <input type="hidden" name="parentId" value="">
+    <% console.log(locals.currentFolderId) %>
+    <input type="hidden" name="parentId" value="<%= locals.currentFolderId %>">
 
     <button type="submit">Create Folder</button>
 </form>
