@@ -32,21 +32,36 @@ async function postUploadFile(req, res) {
 async function getFolder(req, res) {
     const folderId = req.params.id ? parseInt(req.params.id) : null;
 
+    // 1. Fetch current folder details (if not at root)
+    let currentFolder = null;
+    if (folderId) {
+        currentFolder = await prisma.folder.findUnique({
+            where: { id: folderId }
+        });
+    }
+
+    // 2. Fetch subfolders
+    const folders = await prisma.folder.findMany({
+        where: {
+            userId: req.user.id,
+            parentId: folderId,
+        }
+    });
+
+    // 3. Fetch files
+    const files = await prisma.file.findMany({
+        where: {
+            userId: req.user.id,
+            folderId: folderId,
+        }
+    });
+
     res.render('folders', {
-        user: req.user, //
-        folders: await prisma.folder.findMany({ // Changed 'folder' to 'folders'
-            where: {
-                userId: req.user.id,
-                parentId: folderId, //
-            }
-        }),
+        user: req.user,
+        folders: folders,
+        files: files,
+        currentFolder: currentFolder, // This allows us to see the name
         currentFolderId: folderId,
-        files: await prisma.file.findMany({ // Added files to render
-            where: {
-                userId: req.user.id,
-                folderId: folderId, //
-            }
-        })
     });
 }
 
