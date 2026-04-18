@@ -1,61 +1,52 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Home Page</title>
-
-<!-- FIX: Load Tailwind CSS here so the header partial styles work -->
-
-<script src="https://cdn.tailwindcss.com"></script>
-
-<style>
-/* Add the Inter font for consistency */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-body {
-font-family: 'Inter', sans-serif;
-background-color: #f0f4f8;
-}
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
 
-<!-- Structural Fix: Include the partial directly, as the partial already contains the <header> tag -->
 <%- include("partials/header.ejs") %>
-<% console.log(locals) %>
-<main class="container mx-auto p-8">
-    <% if (locals.user) {%>
-        <h3 class="text-2xl font-semibold text-indigo-700">You are logged in, <span class="font-bold"><%- user.username %></span>!</h3>
-        <p class="text-gray-600 mt-4">You can now access your files and folders.</p>
-      <% } else { %>
-        <h3 class="text-2xl font-semibold text-gray-700">Welcome to the File Uploader</h3>
-        <p class="text-gray-600 mt-4">Please log in or sign up to get started.</p>
+
+<main>
+    <% if (locals.user) { %>
+        <h3>You are logged in, <span><%- user.username %></span>!</h3>
+        <p>You can now access your files and folders.</p>
+    <% } else { %>
+        <h3>Welcome to the File Uploader</h3>
+        <p>Please log in or sign up to get started.</p>
     <% } %>
     
     <% if (locals.user) { %>
-    
-    <%- include("partials/upload-file-form.ejs") %>
-    <%- include("partials/create-folder-form.ejs") %>
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-6">
-    <% folders.forEach(folder => { %>
-        <% console.log(folder) %>
-        <a href="/folders/<%= folder.id %>" 
-           class="flex items-center p-4 bg-white rounded-lg shadow-sm border border-gray-200 hover:border-indigo-500 hover:shadow-md transition-all group">
-            <span class="text-2xl mr-3 group-hover:scale-110 transition-transform">📁</span>
-            <span class="font-medium text-gray-700 group-hover:text-indigo-700">
-                <%= folder.name %>
-            </span>
-        </a>
-    <% }); %>
-</div>
-    <% files.forEach(file => { %>
-        <p><%- file.originalName %></p>
-    <% }); %>
+        <%- include("partials/upload-file-form.ejs") %>
+        <%- include("partials/create-folder-form.ejs") %>
+
+        <div>
+            <% folders.forEach(folder => { %>
+                <div>
+                    <a href="/folders/<%= folder.id %>">
+                        <span>📁</span>
+                        <span><%= folder.name %></span>
+                    </a>
+                    <form action="/folders/<%= folder.id %>/update" method="POST" style="display: inline;">
+                <input type="text" name="newName" placeholder="New name" required>
+                <button type="submit">Rename</button>
+            </form>
+
+            <form action="/folders/<%= folder.id %>/delete" method="POST" style="display: inline;">
+                <button type="submit" onclick="return confirm('Delete this folder?')">Delete</button>
+            </form>
+                </div>
+            <% }); %>
+        </div>
+
+        <% files.forEach(file => { %>
+            <p><%- file.originalName %></p>
+        <% }); %>
     <% } %>
 </main>
-
 
 </body>
 </html>

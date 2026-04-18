@@ -67,6 +67,36 @@ async function postCreateFolder(req, res) {
     res.redirect(redirectUrl);
 }
 
+async function postUpdateFolder(req, res) {
+    const { id } = req.params;
+    const { newName } = req.body;
+    console.log("postUpdateFolder")
+    console.log(id)
+    console.log(newName)
+    
+    await prisma.folder.update({
+        where: { id: parseInt(id) }, //
+        data: { name: newName }
+    });
+    
+    // Redirect back to the parent folder or root
+    res.redirect('/');
+}
+
+async function postDeleteFolder(req, res) {
+    const { id } = req.params;
+    console.log("postDeleteFolder")
+    console.log(id)
+
+    // Note: This will fail if the folder has files/children 
+    // unless you set up cascading deletes in Prisma.
+    await prisma.folder.delete({
+        where: { id: parseInt(id) } //
+    });
+
+    res.redirect('/');
+}
+
 
 
 async function getRoot(req,res) {
@@ -80,5 +110,7 @@ async function getRoot(req,res) {
 module.exports = {
     postUploadFile,
     postCreateFolder,
-    getFolder
+    getFolder,
+    postUpdateFolder,
+    postDeleteFolder
 }
