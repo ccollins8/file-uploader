@@ -55,7 +55,8 @@
         </div>
 
         <% files.forEach(file => { %>
-            <p><%- file.originalName %></p>
+            <a href="/files/<%= file.id %>"><%- file.originalName %></a>
+            
         <% }); %>
     <% } %>
 </main>

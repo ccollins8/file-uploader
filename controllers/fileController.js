@@ -65,6 +65,23 @@ async function getFolder(req, res) {
     });
 }
 
+async function getFile(req, res) {
+    const fileId = req.params.id ? parseInt(req.params.id) : null;
+
+    const file = await prisma.file.findUnique({
+        where: {
+            userId: req.user.id,
+            id: fileId
+        }
+    })
+    
+
+    res.render('file-details', {
+        user: req.user,
+        file: file,
+    });
+}
+
 async function postCreateFolder(req, res) {
     const { name, parentId } = req.body;
     console.log(req.body)
@@ -126,6 +143,7 @@ module.exports = {
     postUploadFile,
     postCreateFolder,
     getFolder,
+    getFile,
     postUpdateFolder,
     postDeleteFolder
 }

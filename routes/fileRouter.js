@@ -7,6 +7,8 @@ const uploadMiddleware = require('../config/upload');
 // Change getFolders to getFolder to match your controller
 fileRouter.get('/folders', fileController.getFolder);
 fileRouter.get('/folders/:id', fileController.getFolder);
+
+fileRouter.get('/files/:id', fileController.getFile);
 // fileRouter.js
 fileRouter.post('/folders/:id/update', fileController.postUpdateFolder);
 fileRouter.post('/folders/:id/delete', fileController.postDeleteFolder);
