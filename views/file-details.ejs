@@ -9,7 +9,11 @@
     <%- include("partials/header.ejs") %>
 
     <main class="max-w-2xl mx-auto mt-10 bg-white p-8 rounded-lg shadow">
-        <a href="javascript:history.back()" class="text-sm text-indigo-600 mb-4 inline-block">← Back</a>
+        <!-- <a href="javascript:history.back()" class="text-sm text-indigo-600 mb-4 inline-block">← Back</a> -->
+         <% const backURL = file.folderId ? '/folders/' + file.folderId : '/folders' %>
+         <a href="<%= backURL %>" class="text-sm text-indigo-600 mb-4 inline-block">
+            ← Back to <%= file.folderId ? 'Folder' : 'My Files' %>
+        </a>
         
         <h1 class="text-3xl font-bold mb-6 text-gray-800"><%= file.originalName %></h1>
 
