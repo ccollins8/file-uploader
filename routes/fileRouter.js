@@ -1,7 +1,8 @@
 const { Router } = require("express");
+const multer = require('multer')
 const fileController = require('../controllers/fileController')
 const fileRouter = Router();
-const uploadMiddleware = require('../config/upload');
+const upload = require('../config/upload');
 
 // Add the '?' so /folders works without an ID
 // Change getFolders to getFolder to match your controller
@@ -19,10 +20,21 @@ fileRouter.post('/folders/:id/delete', fileController.postDeleteFolder);
 fileRouter.post('/create-folder', fileController.postCreateFolder)
 
 
-fileRouter.post('/upload-file', 
-    uploadMiddleware.single('uploaded_file'), // <-- This is Multer, it saves the file!
-    fileController.postUploadFile             // <-- This is the new controller, it saves the path to Prisma!
-);
+fileRouter.post('/upload-file', (req, res, next) => {
+    // Manually call the multer middleware to catch errors
+    upload.single('uploaded_file')(req, res, (err) => {
+        if (err instanceof multer.MulterError) {
+            // This catches "File too large" (limits)
+            return res.status(400).send(`Multer Error: ${err.message}`);
+        } else if (err) {
+            // This catches your "Invalid file type" error
+            return res.status(400).send(`Validation Error: ${err.message}`);
+        }
+        
+        // If no error, proceed to the controller
+        fileController.postUploadFile(req, res);
+    });
+});
 
 
 module.exports = fileRouter
