@@ -37,7 +37,10 @@
         </div>
 
         <div class="mt-8 flex gap-4">
-            <a href="/download/<%= file.id %>" class="bg-indigo-600 text-white px-4 py-2 rounded">Download File</a>
+           <a href="/files/<%= file.id %>/download" 
+            class="inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg transition shadow-md">
+            📥 Download File
+            </a>
         </div>
     </main>
 </body>

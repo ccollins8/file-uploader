@@ -1,4 +1,5 @@
 const prisma = require('../prisma/client')
+const path = require('path');
 
 const multer  = require('multer')
 const upload = multer({ dest: 'uploads/' })
@@ -82,6 +83,32 @@ async function getFile(req, res) {
     });
 }
 
+async function downloadFile(req, res) {
+    const { id } = req.params;
+
+    const file = await prisma.file.findUnique({
+        where: { 
+            id: parseInt(id),
+            userId: req.user.id // Security check
+        }
+    });
+
+    if (!file) {
+        return res.status(404).send("File not found");
+    }
+
+    // path.resolve ensures we have the absolute path for Express
+    const absolutePath = path.resolve(file.filePath);
+
+    // res.download(path, filename)
+    res.download(absolutePath, file.originalName, (err) => {
+        if (err) {
+            console.error("Download error:", err);
+            res.status(500).send("Could not download the file.");
+        }
+    });
+}
+
 async function postCreateFolder(req, res) {
     const { name, parentId } = req.body;
     console.log(req.body)
@@ -144,6 +171,7 @@ module.exports = {
     postCreateFolder,
     getFolder,
     getFile,
+    downloadFile,
     postUpdateFolder,
     postDeleteFolder
 }

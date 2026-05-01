@@ -9,6 +9,8 @@ fileRouter.get('/folders', fileController.getFolder);
 fileRouter.get('/folders/:id', fileController.getFolder);
 
 fileRouter.get('/files/:id', fileController.getFile);
+
+fileRouter.get('/files/:id/download', fileController.downloadFile);
 // fileRouter.js
 fileRouter.post('/folders/:id/update', fileController.postUpdateFolder);
 fileRouter.post('/folders/:id/delete', fileController.postDeleteFolder);
